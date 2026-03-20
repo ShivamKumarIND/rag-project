@@ -96,4 +96,4 @@ Set `"managerLLM"` to the key of your default model.
 
 - **Backend:** FastAPI, LangChain, FAISS, HuggingFace Embeddings, PyPDF
 - **Frontend:** Vanilla HTML / CSS / JavaScript
-- **LLM:** Groq (Llama 3 70B) via LangChain
+- **LLM:** Groq (qwen/qwen3-32b) via LangChain

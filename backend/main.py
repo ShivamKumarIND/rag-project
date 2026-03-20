@@ -43,6 +43,16 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 FRONTEND_DIR = Path(__file__).parent.parent / "frontend"
 
 
+@app.on_event("startup")
+def preload_models():
+    """Preload the embedding model at server startup to avoid timeout on first upload."""
+    from rag_pipeline import _get_embeddings
+    import logging
+    logging.info("Preloading embedding model...")
+    _get_embeddings()
+    logging.info("Embedding model loaded.")
+
+
 # ── Pydantic models ──────────────────────────────────────────────────────────
 
 

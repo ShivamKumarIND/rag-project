@@ -123,6 +123,10 @@
 
     try {
       const res = await fetch(`${API_BASE}/upload`, { method: "POST", body: formData });
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        throw new Error("Server error — possibly out of memory. Try a smaller PDF.");
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Upload failed");
 
@@ -161,6 +165,10 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question: q, session_id: sessionId, llm_id: llmSelect.value }),
       });
+      const contentType = res.headers.get("content-type") || "";
+      if (!contentType.includes("application/json")) {
+        throw new Error("Server error — please try again.");
+      }
       const data = await res.json();
       if (!res.ok) throw new Error(data.detail || "Failed to get answer");
 

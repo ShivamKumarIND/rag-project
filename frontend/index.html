@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DocTalk — Document Q&amp;A</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ── Navbar ─────────────────────────────────────────────── -->
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <svg class="navbar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+        <polyline points="10 9 9 9 8 9"/>
+      </svg>
+      DocTalk
+    </div>
+    <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="22" height="22">
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <div class="app-container">
+    <!-- ── Sidebar ────────────────────────────────────────────── -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-section">
+        <label class="sidebar-label" for="llmSelect">LLM Model</label>
+        <select id="llmSelect" class="sidebar-select">
+          <option value="">Loading models…</option>
+        </select>
+      </div>
+
+      <div class="sidebar-section">
+        <label class="sidebar-label">Upload PDF</label>
+        <div class="drop-zone" id="dropZone">
+          <svg class="drop-zone-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="17 8 12 3 7 8"/>
+            <line x1="12" y1="3" x2="12" y2="15"/>
+          </svg>
+          <p class="drop-zone-text">Drag &amp; drop a PDF here</p>
+          <p class="drop-zone-hint">or click to browse</p>
+          <input type="file" id="fileInput" accept=".pdf" hidden />
+        </div>
+        <div id="selectedFile" class="selected-file" style="display:none;">
+          <span id="selectedFileName"></span>
+          <button id="clearFile" class="clear-file-btn" aria-label="Clear file">&times;</button>
+        </div>
+        <button id="uploadBtn" class="btn btn-primary upload-btn" disabled>
+          <span class="btn-text">Upload &amp; Index</span>
+          <span class="spinner" id="uploadSpinner" style="display:none;"></span>
+        </button>
+      </div>
+
+      <div class="sidebar-section" id="statusSection">
+        <div id="statusArea"></div>
+      </div>
+
+      <div class="sidebar-section" id="docBadgeSection" style="display:none;">
+        <div class="doc-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+          </svg>
+          <span id="docBadgeName"></span>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        All Rights Reserved &copy; ShivamKumar
+      </div>
+    </aside>
+
+    <!-- ── Chat panel ─────────────────────────────────────────── -->
+    <main class="chat-panel">
+      <div class="chat-messages" id="chatMessages">
+        <div class="empty-state" id="emptyState">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+          <p>Upload a PDF to start asking questions</p>
+        </div>
+      </div>
+
+      <div class="chat-input-bar">
+        <input
+          type="text"
+          id="questionInput"
+          class="chat-input"
+          placeholder="Ask a question about your document…"
+          disabled
+        />
+        <button id="sendBtn" class="btn btn-send" disabled aria-label="Send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+        </button>
+      </div>
+    </main>
+  </div>
+
+  <!-- ── Toast container ──────────────────────────────────────── -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
